@@ -33,6 +33,7 @@ public class CalculatorController : MonoBehaviour {
 	void Start(){
 		Debug.Log ("testing math");
 		MathResolver.test();
+		CalculationEvaluator.test();
 	}
 
 	public void dot(){

@@ -4,18 +4,18 @@ using System.Collections;
 //effectively a library to handle math operations
 public class MathResolver {
 
-	//applies Operation op to r and l such that the result will be "l <op> r". 
-	//NOTE: l and r are swapped in the paramaters of this function so that they can be pulled of a stack as they are entered
-	public static float resolve(Operation op, float r = 0.0f, float l = 0.0f){
+	//applies Operation op to a and b such that the result will be "a <op> b". 
+	//NOTE: a and b are swapped in the paramaters of this function so that they can be pulled of a stack as they are entered
+	public static float resolve(Operation op, float a = 0.0f, float b = 0.0f){
 		switch(op){
 		case Operation.add:
-			return add (l,r);
+			return add (a,b);
 		case Operation.subtract:
-			return subtract(l,r);
+			return subtract(a,b);
 		case Operation.multiply:
-			return multiply(l,r);
+			return multiply(a,b);
 		case Operation.divide:
-			return divide(l,r);
+			return divide(a,b);
 		default:
 			return 0.0f;
 		}

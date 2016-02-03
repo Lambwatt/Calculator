@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OpenBracket : Bracket {
-	
+public class OpenBracket : Symbol {
+	public OpenBracket()/*:base(2)*/{}
 }
