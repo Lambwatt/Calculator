@@ -6,8 +6,8 @@ public class MathResolver {
 
 	//applies Operation op to a and b such that the result will be "a <op> b". 
 	//NOTE: a and b are swapped in the paramaters of this function so that they can be pulled of a stack as they are entered
-	public static float resolve(Operation op, float a = 0.0f, float b = 0.0f){
-		switch(op){
+	public static float resolve(MathOp op, float a = 0.0f, float b = 0.0f){
+		switch(op.getOperation()){
 		case Operation.add:
 			return add (a,b);
 		case Operation.subtract:
@@ -22,25 +22,23 @@ public class MathResolver {
 	}
 
 	private static float add(float a, float b){
+		Debug.Log ("Resolving "+a+" + "+b);
 		return a + b;
 	}
 
 	private static float subtract(float a, float b){
+		Debug.Log ("Resolving "+a+" - "+b);
 		return a - b;
 	}
 
 	private static float multiply(float a, float b){
+		Debug.Log ("Resolving "+a+" * "+b);
 		return a * b;
 	}
 
 	private static float divide(float a, float b){
+		Debug.Log ("Resolving "+a+" / "+b);
 		return a/b;
 	}
 
-	public static void test(){
-		Debug.Log (resolve(Operation.add,3.0f, 4.0f));
-		Debug.Log (resolve(Operation.subtract,3.0f, 4.0f));
-		Debug.Log (resolve(Operation.multiply,3.0f, 4.0f));
-		Debug.Log (resolve(Operation.divide,3.0f, 4.0f));
-	}
 }
