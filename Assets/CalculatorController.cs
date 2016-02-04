@@ -9,7 +9,12 @@ public class CalculatorController : MonoBehaviour {
 //	};
 
 	private enum InputType{
-		blank,operation,number,open,close
+		blank, 
+		operation, 
+		number, 
+		open, 
+		close, 
+		answer
 	};
 
 	public CalculatorModel m_model;
@@ -20,22 +25,27 @@ public class CalculatorController : MonoBehaviour {
 	private bool m_dotPressed = false;
 	private int m_bracketCount = 0;
 	private float m_powerOfTen = 0.1f;
+	private int m_decimalPlaces = 0;
+
+	private void endNumber(){
+		m_model.append(m_activeNum);
+		m_activeNum = 0.0f;
+		m_dotPressed = false;
+		m_powerOfTen = 0.1f;
+		m_decimalPlaces = 0;
+	}
 
 	public void number(int i){
 		if(m_dotPressed){
 			m_activeNum += m_powerOfTen*(float)i;
+			m_decimalPlaces++;
 			m_powerOfTen*=0.1f;
 		}else{
 			m_activeNum = m_activeNum*10 + (float)i;
 		}
-		m_view.updateDisplay(m_activeNum);
+		m_view.updateDisplay(m_activeNum, m_decimalPlaces);
 		m_lastInput = InputType.number;
 	}
-
-//	void Start(){
-//		Debug.Log ("testing math");
-//		CalculationEvaluator.test();
-//	}
 
 	public void dot(){
 		m_dotPressed = true;
@@ -43,7 +53,6 @@ public class CalculatorController : MonoBehaviour {
 		m_view.updateDisplay(m_activeNum);
 
 		m_lastInput = InputType.number;
-		m_view.updateDisplay();
 	}
 
 	public void operation(string opString){
@@ -51,21 +60,23 @@ public class CalculatorController : MonoBehaviour {
 		Operation op  = (Operation)System.Enum.Parse( typeof( Operation ), opString );
 
 		switch(m_lastInput){
-		case InputType.blank:
+		case InputType.answer:
 			//Use answer as first entry
 			m_model.appendAnswer();
 			m_model.append((object)MathOpFactory.createMathOp(op));
 			break;
+		case InputType.blank:
 		case InputType.open:
 			if(op == Operation.subtract){
 				//add 0, then subtract to create a negative number
 				m_model.append(0.0f);
 				m_model.append(MathOpFactory.createMathOp(op));
+			}else{
+				return;
 			}
 			break;
 		case InputType.number:
-			m_model.append(m_activeNum);
-			m_activeNum = 0.0f;
+			endNumber();
 			m_model.append(MathOpFactory.createMathOp(op));
 			break;
 		case InputType.operation:
@@ -94,8 +105,7 @@ public class CalculatorController : MonoBehaviour {
 	public void closeBracket(){
 		if(!(m_bracketCount == 0 || m_lastInput==InputType.operation)){
 			if(m_lastInput==InputType.number){
-				m_model.append(m_activeNum);
-				m_activeNum = 0.0f;
+				endNumber();
 			}
 
 			m_bracketCount--;
@@ -109,13 +119,12 @@ public class CalculatorController : MonoBehaviour {
 	public void equals(){
 		if(!(m_bracketCount>0 || m_lastInput==InputType.operation)){
 			if(m_lastInput==InputType.number){
-				m_model.append(m_activeNum);
-				m_activeNum = 0.0f;
+				endNumber();
 			}
 			m_model.setAnswer();
 			m_model.clearInput();
 
-			m_lastInput = InputType.blank;
+			m_lastInput = InputType.answer;
 			m_view.showAnswer();
 		}
 	}
@@ -124,6 +133,7 @@ public class CalculatorController : MonoBehaviour {
 		m_model.clearInput();
 		m_model.clearAnswer();
 		m_activeNum = 0.0f;
-		m_view.updateDisplay();
+		m_view.updateDisplay(0.0f);
+		m_lastInput = InputType.blank;
 	}
 }
