@@ -2,11 +2,15 @@
 using System.Collections;
 using System;
 
+/************************************************
+ * Purpose: Inputs data to CalculatorModel and calls display function in the CalculatorView
+ * Preconditions: m_model and m_view must be populated
+ * 
+ * NOTE: As this is the only function with links to the evaluate() function, it is responsible 
+ * 			for ensuring the data stored model is valid when the '=' button is pressed.
+ * 			
+ */
 public class CalculatorController : MonoBehaviour {
-
-//	private enum CalculatorButton{
-//		zero,one,two,three,four,five,six,seven,eight,nine,dot,add,subtract,multiply,divide,equals,clear,open,close
-//	};
 
 	private enum InputType{
 		blank, 
@@ -60,16 +64,14 @@ public class CalculatorController : MonoBehaviour {
 		Operation op  = (Operation)System.Enum.Parse( typeof( Operation ), opString );
 
 		switch(m_lastInput){
-		case InputType.answer:
-			//Use answer as first entry
-			m_model.appendAnswer();
+		case InputType.answer:										
+			m_model.appendAnswer();									//Use answer as first entry
 			m_model.append((object)MathOpFactory.createMathOp(op));
 			break;
 		case InputType.blank:
 		case InputType.open:
-			if(op == Operation.subtract){
-				//add 0, then subtract to create a negative number
-				m_model.append(0.0f);
+			if(op == Operation.subtract){						
+				m_model.append(0.0f);							//add 0, then subtract to create a negative number
 				m_model.append(MathOpFactory.createMathOp(op));
 			}else{
 				return;
@@ -121,7 +123,7 @@ public class CalculatorController : MonoBehaviour {
 			if(m_lastInput==InputType.number){
 				endNumber();
 			}
-			m_model.setAnswer();
+			m_model.setAnswer(CalculationEvaluator.evaluate(m_model.getInput()));
 			m_model.clearInput();
 
 			m_lastInput = InputType.answer;

@@ -2,6 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/************************************************
+ * Purpose: Displays data to CalculatorModel in a text field
+ * Preconditions: m_model and m_displayText must be populated
+ * 
+ * 			
+ */
 public class CalculatorView : MonoBehaviour {
 
 	public CalculatorModel m_model;

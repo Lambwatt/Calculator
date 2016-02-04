@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//effectively a library to handle math operations
+/************************************************
+ * Purpose: Library class that handles math operations where operator have been replaced with MathOps
+ * Preconditions: none
+ * 			
+ */
 public class MathResolver {
-
-	//applies Operation op to a and b such that the result will be "a <op> b". 
-	//NOTE: a and b are swapped in the paramaters of this function so that they can be pulled of a stack as they are entered
+	
 	public static float resolve(MathOp op, float a = 0.0f, float b = 0.0f){
 		switch(op.getOperation()){
 		case Operation.add:

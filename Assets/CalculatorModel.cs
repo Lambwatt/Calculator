@@ -2,6 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/************************************************
+ * Purpose: Holds data for calculator. Also contains only reference to evaluation funciton 
+ * Preconditions: none
+ * 
+ * NOTE: CalculatorModel is blind as to the validity of m_input. It is the responsibility of 
+ */
 public class CalculatorModel : MonoBehaviour {
 
 	private float m_answer;
@@ -29,8 +35,8 @@ public class CalculatorModel : MonoBehaviour {
 		return m_answer;
 	}
 
-	public void setAnswer(){
-		m_answer = CalculationEvaluator.evaluate(m_input);
+	public void setAnswer(float answer){
+		m_answer = answer;
 	}
 
 	public void clearAnswer(){

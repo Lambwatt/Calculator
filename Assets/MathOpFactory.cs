@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/************************************************
+ * Purpose: Library class for converting the Operations used in the controller 
+ * 				into MathOps used in the CalculatorEvaluator
+ * 
+ */
 public class MathOpFactory{
 
 	public static MathOp createMathOp(Operation op){
