@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class CalculatorController : MonoBehaviour {
 
@@ -31,10 +32,10 @@ public class CalculatorController : MonoBehaviour {
 		m_lastInput = InputType.number;
 	}
 
-	void Start(){
-		Debug.Log ("testing math");
-		CalculationEvaluator.test();
-	}
+//	void Start(){
+//		Debug.Log ("testing math");
+//		CalculationEvaluator.test();
+//	}
 
 	public void dot(){
 		m_dotPressed = true;
@@ -45,7 +46,9 @@ public class CalculatorController : MonoBehaviour {
 		m_view.updateDisplay();
 	}
 
-	public void operation(Operation op){
+	public void operation(string opString){
+
+		Operation op  = (Operation)System.Enum.Parse( typeof( Operation ), opString );
 
 		switch(m_lastInput){
 		case InputType.blank:
@@ -62,6 +65,7 @@ public class CalculatorController : MonoBehaviour {
 			break;
 		case InputType.number:
 			m_model.append(m_activeNum);
+			m_activeNum = 0.0f;
 			m_model.append(MathOpFactory.createMathOp(op));
 			break;
 		case InputType.operation:
@@ -78,15 +82,22 @@ public class CalculatorController : MonoBehaviour {
 	}
 
 	public void openBracket(){
-		m_model.append(new OpenBracket());
-		m_bracketCount++;
+		if(!(m_lastInput==InputType.number)){
+			m_model.append(new OpenBracket());
+			m_bracketCount++;
 
-		m_lastInput = InputType.open;
-		m_view.updateDisplay();
+			m_lastInput = InputType.open;
+			m_view.updateDisplay();
+		}
 	}
 
 	public void closeBracket(){
 		if(!(m_bracketCount == 0 || m_lastInput==InputType.operation)){
+			if(m_lastInput==InputType.number){
+				m_model.append(m_activeNum);
+				m_activeNum = 0.0f;
+			}
+
 			m_bracketCount--;
 			m_model.append(new CloseBracket());
 
@@ -97,11 +108,15 @@ public class CalculatorController : MonoBehaviour {
 
 	public void equals(){
 		if(!(m_bracketCount>0 || m_lastInput==InputType.operation)){
+			if(m_lastInput==InputType.number){
+				m_model.append(m_activeNum);
+				m_activeNum = 0.0f;
+			}
 			m_model.setAnswer();
 			m_model.clearInput();
 
 			m_lastInput = InputType.blank;
-			m_view.updateDisplay();
+			m_view.showAnswer();
 		}
 	}
 
@@ -109,6 +124,6 @@ public class CalculatorController : MonoBehaviour {
 		m_model.clearInput();
 		m_model.clearAnswer();
 		m_activeNum = 0.0f;
-		m_view.updateDisplay(m_activeNum);
+		m_view.updateDisplay();
 	}
 }
