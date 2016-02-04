@@ -2,5 +2,5 @@
 using System.Collections;
 
 public class DivideOp : ProportionalOp {
-	public DivideOp():base(Operation.divide){}
+	public DivideOp():base(Operation.divide, '/'){}
 }

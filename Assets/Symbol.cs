@@ -2,9 +2,14 @@
 using System.Collections;
 
 public class Symbol {
-	//private int precedence {get; set;}
 
-	protected Symbol(/*int p*/){
-		//precedence = p;
+	char sign;
+
+	protected Symbol(char c){
+		sign = c;
+	}
+
+	public override string ToString(){
+		return ""+sign;
 	}
 }

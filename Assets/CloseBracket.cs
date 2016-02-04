@@ -2,5 +2,5 @@
 using System.Collections;
 
 public class CloseBracket : Symbol {
-	public CloseBracket()/*:base(2)*/{}
+	public CloseBracket():base(')'){}
 }

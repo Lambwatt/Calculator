@@ -6,7 +6,7 @@ public class CalculationEvaluator {
 	
 	public static float evaluate(List<object> expression){
 		if(expression.Count==0) {
-			Debug.Log ("Stopped here.");
+			//Debug.Log ("Stopped here.");
 			return 0.0f;
 		}
 		else if(expression[0].GetType()==typeof(OpenBracket))
@@ -17,7 +17,7 @@ public class CalculationEvaluator {
 
 	private static float evaluate(float f, List<object> tail){
 		if(tail.Count==0){
-			Debug.Log ("Stopped here.");
+			//Debug.Log ("Stopped here.");
 			return f;
 		}
 		if(tail[0].GetType().IsSubclassOf(typeof(ProportionalOp)))
@@ -45,7 +45,7 @@ public class CalculationEvaluator {
 
 	private static float evaluate(float f1, IncrementalOp op, float f2, List<object> tail){
 		if(tail.Count==0 || tail[0].GetType()==typeof(CloseBracket)){
-			Debug.Log ("Stopped here.");
+			//Debug.Log ("Stopped here.");
 			return MathResolver.resolve((MathOp)op, f1, f2);
 		} 
 		else if(tail[0].GetType().IsSubclassOf(typeof(ProportionalOp)))
@@ -99,7 +99,7 @@ public class CalculationEvaluator {
 
 
 	public static float evaluate(float f, IncrementalOp op, List<object> acc, List<object> tail, int brackets = 0){
-		Debug.Log (tail[0]+" "+tail.Count);
+		//Debug.Log (tail[0]+" "+tail.Count);
 		if(tail[0].GetType()==typeof(CloseBracket)){
 			if(brackets==0)
 				return evaluate(f, op, evaluate(acc), tail.GetRange(1, tail.Count-1));

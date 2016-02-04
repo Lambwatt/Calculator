@@ -4,30 +4,40 @@ using System.Collections.Generic;
 
 public class CalculatorModel : MonoBehaviour {
 
-	private float answer;
-	private List<Object> input;
+	private float m_answer;
+	private List<object> m_input;
 
 	// Use this for initialization
 	void Start () {
-		input = new List<Object>();
-		answer = 0.0f;
+		m_input = new List<object>();
+		m_answer = 0.0f;
 	}
 	
-	public void append(Object o){}
+	public void append(object o){
+		m_input.Add(o);
+	}
 
-	public void appendAnswer(){}
+	public void appendAnswer(){
+		m_input.Add(m_answer);
+	}
 
-	public List<Object> getInput(){
-		return input;
+	public List<object> getInput(){
+		return m_input;
 	}
 
 	public float getAnswer(){
-		return answer;
+		return m_answer;
 	}
 
-	public void setAnswer(){}
+	public void setAnswer(){
+		m_answer = CalculationEvaluator.evaluate(m_input);
+	}
 
-	public void clearAnswer(){}
+	public void clearAnswer(){
+		m_answer = 0.0f;
+	}
 
-	public void clearInput(){}
+	public void clearInput(){
+		m_input.Clear();
+	}
 }

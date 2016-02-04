@@ -2,5 +2,5 @@
 using System.Collections;
 
 public class SubtractOp : IncrementalOp {
-	public SubtractOp():base(Operation.subtract){}
+	public SubtractOp():base(Operation.subtract, '-'){}
 }

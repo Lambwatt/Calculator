@@ -2,5 +2,5 @@
 using System.Collections;
 
 public class MultiplyOp : ProportionalOp {
-	public MultiplyOp():base(Operation.multiply){}
+	public MultiplyOp():base(Operation.multiply, '*'){}
 }
